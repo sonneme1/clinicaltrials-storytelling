@@ -197,10 +197,7 @@ a:focus-visible {
 .hook-stat strong { color: var(--color-barrier); }
 
 .scroll-prompt {
-  position: absolute;
-  bottom: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-top: 4rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.08em;
