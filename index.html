@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Access Gap — Who Gets Left Out of Clinical Trials</title>
+<meta name="description" content="An interactive data story about who gets excluded from clinical trials, and why that's a design problem, not a patient problem." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- Progress rail -->
+<div class="progress-rail" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 0 — HOOK / TITLE -->
+<!-- ============================================================ -->
+<section class="chapter chapter-0" id="chapter-0" aria-label="Introduction">
+  <div class="grain" aria-hidden="true"></div>
+  <div class="hook-content">
+    <p class="eyebrow">A data story about clinical trial access</p>
+    <div class="counter-wrap">
+      <span class="counter" id="heroCounter" data-start="10000" data-end="312" aria-live="polite">10,000</span>
+      <span class="counter-label">people. one trial.</span>
+    </div>
+    <p class="hook-stat" id="hookStat">
+      Only <strong>3%</strong> of eligible patients ever enroll in a clinical trial.
+    </p>
+    <div class="scroll-prompt" aria-hidden="true">
+      <span>Scroll to begin</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 1 — THE PROMISE -->
+<!-- ============================================================ -->
+<section class="chapter chapter-1" id="chapter-1" aria-label="The promise of clinical trials">
+  <div class="chapter-inner narrow">
+    <p class="chapter-kicker">Chapter One</p>
+    <h2 class="chapter-title">The Promise</h2>
+    <p class="chapter-body">
+      Clinical trials are how medicine moves forward. They test whether a new drug,
+      device, or treatment actually works — and whether it's safe — before it reaches
+      the people who need it most. Every approved therapy on the market today passed
+      through this gauntlet.
+    </p>
+    <p class="chapter-body">
+      But a trial is only as good as the people inside it. If the participants don't
+      reflect the patients who will eventually take the drug, the results can't tell
+      us how it will really perform for everyone.
+    </p>
+    <p class="chapter-body chapter-body-emphasis">
+      So who actually makes it into the room? This is the story of one fictional
+      trial, and the 9,688 people who didn't.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 2 — THE FUNNEL (centerpiece) -->
+<!-- ============================================================ -->
+<section class="chapter chapter-2" id="chapter-2" aria-label="The enrollment funnel">
+  <div class="chapter-inner wide">
+    <p class="chapter-kicker">Chapter Two</p>
+    <h2 class="chapter-title">The Funnel</h2>
+    <p class="chapter-body">
+      Watch 10,000 aware, willing patients shrink to 312 enrolled — one barrier at a
+      time. Hover any stage to meet the people it left behind.
+    </p>
+
+    <div class="funnel-layout">
+      <div class="funnel-viz-wrap">
+        <svg id="funnelSvg" role="img" aria-label="Enrollment funnel showing patient drop-off at each barrier"></svg>
+      </div>
+      <div class="funnel-detail" id="funnelDetail" aria-live="polite">
+        <p class="funnel-detail-placeholder">Hover or focus a stage to see who it left behind.</p>
+      </div>
+    </div>
+
+    <table class="sr-only-table" aria-label="Enrollment funnel data table">
+      <caption>Enrollment funnel: number and percent of patients remaining at each stage</caption>
+      <thead><tr><th>Stage</th><th>People</th><th>% Remaining</th></tr></thead>
+      <tbody id="funnelTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 3 — WHERE ARE THE SITES? -->
+<!-- ============================================================ -->
+<section class="chapter chapter-3" id="chapter-3" aria-label="Trial site locations map">
+  <div class="chapter-inner wide">
+    <p class="chapter-kicker">Chapter Three</p>
+    <h2 class="chapter-title">Where Are the Sites?</h2>
+    <p class="chapter-body">
+      Trial sites cluster in metro areas. Patients don't. The average person lives
+      49 miles from the nearest site — and for rural patients, that's often a
+      two-hour round trip for a 20-minute visit.
+    </p>
+
+    <div class="map-controls" role="group" aria-label="Drive-time ring toggle">
+      <span class="map-controls-label">Drive-time rings:</span>
+      <button class="toggle-btn active" data-minutes="30">30 min</button>
+      <button class="toggle-btn active" data-minutes="60">60 min</button>
+      <button class="toggle-btn active" data-minutes="90">90 min</button>
+    </div>
+
+    <div id="trialMap" class="trial-map" role="img" aria-label="Map of Minnesota showing trial sites and drive-time access rings"></div>
+    <p class="map-caption">Circles show 30 / 60 / 90 minute drive-time reach from each trial site. Dot size reflects patient population at each location.</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 4 — WHO GETS FILTERED OUT? -->
+<!-- ============================================================ -->
+<section class="chapter chapter-4" id="chapter-4" aria-label="Barrier breakdown by demographic">
+  <div class="chapter-inner wide">
+    <p class="chapter-kicker">Chapter Four</p>
+    <h2 class="chapter-title">Who Gets Filtered Out?</h2>
+    <p class="chapter-body">
+      Not every barrier hits every patient the same way. Filter by group to see which
+      obstacles weigh heaviest.
+    </p>
+
+    <div class="filter-controls" role="group" aria-label="Demographic filter">
+      <label for="demographicSelect">View by:</label>
+      <select id="demographicSelect">
+        <option value="age">Age</option>
+        <option value="income">Income bracket</option>
+        <option value="geography">Rural vs. urban</option>
+      </select>
+    </div>
+
+    <div class="barrier-chart-wrap">
+      <svg id="barrierSvg" role="img" aria-label="Bar chart of drop-off percentage by barrier type"></svg>
+    </div>
+    <div class="barrier-legend" id="barrierLegend"></div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 5 — THE REPRESENTATION GAP -->
+<!-- ============================================================ -->
+<section class="chapter chapter-5" id="chapter-5" aria-label="Representation gap chart">
+  <div class="chapter-inner wide">
+    <p class="chapter-kicker">Chapter Five</p>
+    <h2 class="chapter-title">The Representation Gap</h2>
+    <p class="chapter-body">
+      Compare who enrolled against who the disease actually affects. The gap between
+      the two bars is the story.
+    </p>
+    <div class="representation-chart-wrap">
+      <svg id="representationSvg" role="img" aria-label="Comparison chart of enrolled percentage versus affected population percentage by group"></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 6 — WHAT IF? -->
+<!-- ============================================================ -->
+<section class="chapter chapter-6" id="chapter-6" aria-label="What if scenario slider">
+  <div class="chapter-inner wide">
+    <p class="chapter-kicker">Chapter Six</p>
+    <h2 class="chapter-title">What If?</h2>
+    <p class="chapter-body">
+      This is a design problem, not a patient problem. Drag the slider to see what
+      happens when access is designed in from the start.
+    </p>
+
+    <div class="whatif-wrap">
+      <svg id="whatifSvg" role="img" aria-label="Enrollment funnel comparing current model to designed-for-access model"></svg>
+
+      <div class="whatif-slider-wrap">
+        <span class="whatif-label whatif-label-left">Current<br /><span class="whatif-count" id="whatifCountLeft">312</span></span>
+        <input type="range" id="whatifSlider" min="0" max="100" value="0" aria-label="Slide to compare current enrollment model with a designed-for-access model" />
+        <span class="whatif-label whatif-label-right">Designed for access<br /><span class="whatif-count" id="whatifCountRight">847</span></span>
+      </div>
+
+      <ul class="whatif-interventions" id="whatifInterventions"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPTER 7 — CALL TO REFLECTION -->
+<!-- ============================================================ -->
+<section class="chapter chapter-7" id="chapter-7" aria-label="Closing reflection">
+  <div class="grain" aria-hidden="true"></div>
+  <div class="chapter-inner narrow">
+    <blockquote class="closing-quote">
+      "The next breakthrough might depend on who we remember to include."
+    </blockquote>
+    <p class="about-data">
+      <strong>About the data:</strong> All data in this project is simplified and
+      illustrative. It is not sourced from a specific study or institution. Values
+      were invented to be directionally realistic and to serve the narrative. This
+      project is a design exercise, not a research report.
+    </p>
+  </div>
+</section>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/scrollama@3.2.0/build/scrollama.min.js"></script>
+<script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+
+<script src="data/data.js"></script>
+<script src="js/funnel.js"></script>
+<script src="js/map.js"></script>
+<script src="js/barriers.js"></script>
+<script src="js/representation.js"></script>
+<script src="js/whatif.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -2,15 +2,25 @@
 
 ### What We're Building
 
-A single-page, vertical scroll interactive data story built with plain HTML, CSS, and JavaScript. There is no framework, no build tools, and no configuration overhead. The goal is a polished, editorial-quality web experience that uses invented but realistic data to tell a compelling story about who gets excluded from clinical trials — and why that is a design problem, not a patient problem.
+A single-page, vertical scroll interactive data story built with plain HTML, CSS, and
+JavaScript. There is no framework, no build tools, and no configuration overhead. The
+goal is a polished, editorial-quality web experience that uses invented but realistic
+data to tell a compelling story about who gets excluded from clinical trials — and why
+that is a design problem, not a patient problem.
 
-This is a **vibe coding project** — the emphasis is on the story, the visual design, and the interactive moments. Build one chapter at a time. Start in Figma to nail the visual language, then scaffold the HTML/CSS structure and wire in D3 for the funnel.
+This is a **vibe coding project** — the emphasis is on the story, the visual design, and
+the interactive moments. Build one chapter at a time. Start in Figma to nail the visual
+language, then scaffold the HTML/CSS structure and wire in D3 for the funnel.
 
 ---
 
 ### Summary of Site
 
-The site follows a fictional clinical trial's enrollment journey. At each stage of the funnel, a new barrier is introduced — geography, transportation, digital access, work schedule, language — and the pool of eligible patients shrinks. By the end, only 3% of the people who were eligible ever enrolled. The final chapter reframes the story: what if access had been designed in from the start?
+The site follows a fictional clinical trial's enrollment journey. At each stage of the
+funnel, a new barrier is introduced — geography, transportation, digital access, work
+schedule, language — and the pool of eligible patients shrinks. By the end, only 3% of
+the people who were eligible ever enrolled. The final chapter reframes the story: what
+if access had been designed in from the start?
 
 **The story is the thing. Interaction is the icing.**
 
@@ -18,7 +28,9 @@ The site follows a fictional clinical trial's enrollment journey. At each stage 
 
 ### Chapters / Layout
 
-The site is a single-page, vertical scroll experience with 7 distinct chapters. Each chapter has a headline, a human moment (a short vignette or pull quote from a fictional patient), and a data visualization.
+The site is a single-page, vertical scroll experience with 7 distinct chapters. Each
+chapter has a headline, a human moment (a short vignette or pull quote from a fictional
+patient), and a data visualization.
 
 #### Chapter 0 — Hook / Title Screen
 - Full-bleed opening
@@ -71,7 +83,8 @@ The site is a single-page, vertical scroll experience with 7 distinct chapters. 
 
 ### Data
 
-All data is **invented but grounded in real patterns**. Use the values below as your dataset. These live in `data/data.js`.
+All data is **invented but grounded in real patterns**. Use the values below as your
+dataset. These live in `data/data.js`.
 
 #### Enrollment Funnel
 
@@ -198,6 +211,10 @@ Every interaction should deepen understanding — not just add novelty.
 ---
 
 ### Style
+
+#### Example of Visual Storytelling
+https://features.csis.org/hiddenreach/china-shipyard-tiers/
+
 
 #### Color Palette
 
