@@ -365,13 +365,19 @@ a:focus-visible {
   font-size: 0.8rem;
   color: var(--color-slate);
 }
-#demographicSelect {
+.filter-controls select {
   font-family: var(--font-body);
+  font-size: 1rem;
   background: var(--color-bg-raised);
   color: var(--color-text);
   border: 1px solid var(--color-slate);
   border-radius: 4px;
-  padding: 0.4rem 0.75rem;
+  padding: 0.4rem 2rem 0.4rem 0.75rem;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%238DA9C4' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
 }
 
 .barrier-chart-wrap { width: 100%; }
