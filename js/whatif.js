@@ -55,7 +55,8 @@
 
     const rowHeight = 46;
     const height = interpolated.length * rowHeight + 20;
-    const maxBarWidth = width * 0.85;
+    const margin = { left: Math.min(width * 0.38, 280), right: 20 };
+    const maxBarWidth = width - margin.left - margin.right;
     const maxCount = designedFunnel[0];
     const x = d3.scaleLinear().domain([0, maxCount]).range([0, maxBarWidth]);
     const color = d3.interpolateRgb("#E07A5F", "#2EC4B6")(t);
@@ -74,7 +75,7 @@
 
     rows
       .append("rect")
-      .attr("x", (d) => (width - x(d)) / 2)
+      .attr("x", margin.left)
       .attr("width", (d) => x(d))
       .attr("height", rowHeight - 12)
       .attr("rx", 3)
@@ -83,9 +84,9 @@
     rows
       .append("text")
       .attr("class", "funnel-stage-label")
-      .attr("x", width / 2)
+      .attr("x", margin.left - 16)
       .attr("y", (rowHeight - 12) / 2 + 4)
-      .attr("text-anchor", "middle")
+      .attr("text-anchor", "end")
       .text((d, i) => `${labels[i]} — ${Math.round(d).toLocaleString()}`);
 
     // Update headline counts

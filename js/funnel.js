@@ -39,7 +39,8 @@
     const stages = TRIAL_DATA.funnel;
     const rowHeight = 62;
     const height = stages.length * rowHeight + 20;
-    const maxBarWidth = width * 0.9;
+    const margin = { left: Math.min(width * 0.38, 280), right: 20 };
+    const maxBarWidth = width - margin.left - margin.right;
 
     const svg = d3.select("#funnelSvg");
     svg.selectAll("*").remove();
@@ -63,7 +64,7 @@
     groups
       .append("rect")
       .attr("class", "funnel-bar")
-      .attr("x", (d) => (width - scaleWidth(d.count)) / 2)
+      .attr("x", margin.left)
       .attr("y", 0)
       .attr("width", (d) => scaleWidth(d.count))
       .attr("height", rowHeight - 14)
@@ -73,17 +74,17 @@
     groups
       .append("text")
       .attr("class", "funnel-stage-label")
-      .attr("x", width / 2)
+      .attr("x", margin.left - 16)
       .attr("y", (rowHeight - 14) / 2 - 6)
-      .attr("text-anchor", "middle")
+      .attr("text-anchor", "end")
       .text((d) => d.stage);
 
     groups
       .append("text")
       .attr("class", "funnel-stage-count")
-      .attr("x", width / 2)
+      .attr("x", margin.left - 16)
       .attr("y", (rowHeight - 14) / 2 + 14)
-      .attr("text-anchor", "middle")
+      .attr("text-anchor", "end")
       .text((d) => `${d.count.toLocaleString()} (${d.percent}%)`);
 
     groups
